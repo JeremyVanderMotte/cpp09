@@ -12,7 +12,6 @@ class BitcoinExchange
 		BitcoinExchange();
 		BitcoinExchange(const BitcoinExchange & src);
 		std::map<std::string, float> _bitcoinPrices;
-		std::map<std::string, float> _storingPrices;
 		void	extractBitcoinPrices(void);
 		void	extractStoringPrices(std::string filename);
 		void	checkErrorInput(std::string date, int count, double amount, size_t pos, std::string s);

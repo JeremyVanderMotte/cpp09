@@ -15,7 +15,6 @@ BitcoinExchange::BitcoinExchange(std::string filename)
 BitcoinExchange::~BitcoinExchange()
 {
 	this->_bitcoinPrices.clear();
-	this->_storingPrices.clear();
 }
 
 /*
@@ -131,12 +130,15 @@ void	BitcoinExchange::extractBitcoinPrices(void)
 */
 void	BitcoinExchange::printExchange(std::string date, float amount) const
 {
+	if (date.compare(this->_bitcoinPrices.begin()->first) < 0)
+	{
+		std::cout << "Error: bad input => " << date << std::endl;
+		return ;
+	}
 	std::string first = (this->_bitcoinPrices.lower_bound(date))->first;
 	std::string second = (--(this->_bitcoinPrices.lower_bound(date)))->first;
 	size_t diff = abs(first.compare(date));
-	if (date.compare((*this->_bitcoinPrices.begin()).first) < 0)
-		std::cout << "Error: bad input => " << date << std::endl;
-	else if (diff == 0)
+	if (diff == 0)
 		std::cout << date << " => " << amount << " = " << (this->_bitcoinPrices.lower_bound(date)->second * amount) << std::endl; 
 	else
 		std::cout << date << " => " << amount << " = " << (--(this->_bitcoinPrices.lower_bound(date)))->second * amount << std::endl; 
